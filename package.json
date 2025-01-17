@@ -1,0 +1,65 @@
+{
+  "name": "hover-scrollbar",
+  "version": "0.1.0",
+  "description": "重置谷歌浏览器滚动条样式，鼠标移入时才显示滚动条",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/lib.umd.js",
+  "module": "./dist/lib.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/lib.es.js",
+      "require": "./dist/lib.umd.js"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.6",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "@vue/tsconfig": "^0.7.0",
+    "terser": "^5.37.0",
+    "typescript": "~5.6.2",
+    "vite": "^6.0.5",
+    "vite-plugin-dts": "^4.5.0",
+    "vue-tsc": "^2.2.0"
+  },
+  "keywords": [
+    "Vite",
+    "Vue3",
+    "scss",
+    "TypeScript",
+    "Web",
+    "scrollbar",
+    "reset scrollbar",
+    "google scrollbar",
+    "滚动条",
+    "重写滚动条"
+  ],
+  "author": "egg_star",
+  "engines": {
+    "node": ">=20"
+  },
+  "browserslist": [
+    "> 1%",
+    "not ie 11",
+    "not op_mini all",
+    "not dead"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/star-devil/hoverScrollBar.git"
+  },
+  "license": "MIT",
+  "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0"
+}
