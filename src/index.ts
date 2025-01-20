@@ -3,6 +3,10 @@ interface ScrollbarOptions {
   global?: boolean;
 }
 
+interface ScrollbarConstructor {
+  new (options?: ScrollbarOptions): HoverScrollbar;
+}
+
 export class HoverScrollbar {
   private options: ScrollbarOptions;
   private styleElement: HTMLStyleElement | null = null;
@@ -28,8 +32,8 @@ export class HoverScrollbar {
     if (global) {
       return `
         *::-webkit-scrollbar {
-          width: 10px;
-          height: 10px;
+          width: 8px;
+          height: 8px;
           display: block;
         }
         
@@ -47,13 +51,30 @@ export class HoverScrollbar {
           background: rgb(128 128 128);
         }
       `;
-    }
+    } else if (selector) {
+      const originWidth =
+        document.querySelector(selector)?.getBoundingClientRect().width || 0;
 
-    if (selector) {
       return `
+        ${selector} {
+          padding-right: 10px !important;
+          padding-left: 10px !important;
+          overflow: auto !important;
+          scrollbar-gutter: stable !important;
+        }
+            
+        ${selector}:hover {
+          padding-right: 2px !important;
+          width: ${originWidth + 6}px !important;
+        }
+
+        ${selector}:hover::-webkit-scrollbar {
+          display: block;
+        }
+          
         ${selector}::-webkit-scrollbar {
-          width: 10px;
-          height: 10px;
+          width: 8px;
+          height: 8px;
           display: none;
         }
         
@@ -67,19 +88,8 @@ export class HoverScrollbar {
         }
 
         ${selector}::-webkit-scrollbar-thumb:hover {
-            cursor: pointer;
-            background: rgb(128 128 128);
-          }
-
-
-          
-        ${selector}:hover::-webkit-scrollbar {
-          display: block;
-        }
-
-        ${selector} {
-          overflow: auto !important;
-          scrollbar-gutter: stable !important;
+          cursor: pointer;
+          background: rgb(128 128 128);
         }
       `;
     }
@@ -95,4 +105,7 @@ export class HoverScrollbar {
   }
 }
 
-export default HoverScrollbar;
+// 重要：添加类型断言
+const ScrollbarWithConstructor =
+  HoverScrollbar as unknown as ScrollbarConstructor;
+export default ScrollbarWithConstructor;

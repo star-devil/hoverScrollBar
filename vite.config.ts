@@ -23,7 +23,7 @@ export default defineConfig({
       formats: ['es', 'umd']
     },
     rollupOptions: {
-      external: ['vue', 'terser'],
+      external: ['vue'],
       input: ['src/index.ts'],
       output: {
         globals: {
@@ -36,22 +36,6 @@ export default defineConfig({
     commonjsOptions: {
       transformMixedEsModules: true
     },
-    sourcemap: true,
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true
-      },
-      format: {
-        comments: false // 删除注释comments
-      }
-    }
-  },
-  server: {
-    host: '0.0.0.0',
-    port: 3100,
-    open: true,
-    strictPort: true
+    sourcemap: true
   }
 });
