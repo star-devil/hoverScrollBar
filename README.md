@@ -57,8 +57,16 @@ pnpm add hover-scrollbar
 
 - 局部使用
 
-```ts
+```vue
   // 在需要设置滚动条的组件内导入，还是以 vue 为例
+  <template>
+    <div class="content">
+      content
+      <div class="inner-wrap">textInner</div>
+      text
+    </div>
+  </template>
+
   <script lang="ts" setup>
     import createHoverScrollbar from 'hover-scrollbar';
     import { nextTick, onUnmounted, ref } from 'vue';
