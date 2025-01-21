@@ -93,13 +93,18 @@ pnpm add hover-scrollbar
 
   2. 且默认不显示滚动条，只有悬浮到这个节点上才会出现。
 
-  3. 这里为了显示滚动条时，不挤压内部内部元素导致布局变形，为选中节点默认添加了左右`padding`各`10px`。如果原节点就有`padding`值可能会造成样式冲突，这个会在后续版本中想办法解决。
+  3. 为了显示滚动条时，不挤压内部内部元素导致布局变形，为选中节点默认添加了左右`padding`各`10px`。如果原节点就有`padding`值可能会造成样式冲突，这个会在后续版本中想办法解决。
 
 ## Options
 
-| 属性名 | 类型 | 说明 | 默认值 |
-| ------ | ------ | ------ | ------ |
-| global | boolean | 是否全局修改样式 | false |
-| selector | string | 节点选择器 | global和selector二选一必传 |
-| style | {thumbBgColor?: string;thumbHoverBgColor?: string;} | 滚动条颜色和滚动条悬浮颜色 | thumbBgColor: darkgray;thumbHoverBgColor: 'rgb(128 128 128)'; |
-| destroy | function | 销毁重置样式 | - |
+| 属性名 | 类型 | 说明 | 必传 | 默认值 |
+| ------ | ------ | ------ | ------ | ------ |
+| global | boolean | 是否全局修改样式 | 否 | false |
+| selector | string | 节点选择器 | 否 | global和selector二选一必传 |
+| style | {thumbBgColor?: string;thumbHoverBgColor?: string;} | 滚动条颜色和滚动条悬浮颜色 | 否 | thumbBgColor: darkgray；thumbHoverBgColor: 'rgb(128 128 128)' |
+
+## Methods
+
+| 方法名 | 类型 | 说明 |
+| ------ | ------ | ------ |
+| destroy | function | 销毁重置样式 |
