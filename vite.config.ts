@@ -4,32 +4,36 @@
  * @Description:
  */
 import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
 import path from 'path';
 import dts from 'vite-plugin-dts';
 
 export default defineConfig({
   plugins: [
-    vue(),
     dts({
-      insertTypesEntry: true
+      insertTypesEntry: true,
+      include: ['src'],
+      beforeWriteFile: (filePath, content) => {
+        // 确保生成的.d.ts文件包含所有导出
+        if (filePath.endsWith('index.d.ts')) {
+          return {
+            filePath,
+            content: content
+          };
+        }
+      }
     })
   ],
   build: {
     lib: {
-      entry: path.resolve(__dirname, './src/index.ts'),
-      name: 'lib',
-      fileName: (format) => `lib.${format}.js`,
+      entry: path.resolve(__dirname, 'src/index.ts'),
+      name: 'hoverScrollbar',
+      fileName: (format) => `index.${format}.js`,
       formats: ['es', 'umd']
     },
     rollupOptions: {
-      external: ['vue'],
-      input: ['src/index.ts'],
+      external: [],
       output: {
-        globals: {
-          vue: 'Vue'
-        },
-        format: 'es',
+        globals: {},
         exports: 'named'
       }
     },

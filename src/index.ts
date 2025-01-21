@@ -1,33 +1,26 @@
-interface ScrollbarOptions {
-  selector?: string;
-  global?: boolean;
-}
+import type { ScrollbarOptions, ScrollbarInstance } from './types.ts';
 
-interface ScrollbarConstructor {
-  new (options?: ScrollbarOptions): HoverScrollbar;
-}
-
-export class HoverScrollbar {
-  private options: ScrollbarOptions;
-  private styleElement: HTMLStyleElement | null = null;
-
-  constructor(options: ScrollbarOptions = {}) {
-    this.options = {
-      global: false,
-      ...options
+export const createHoverScrollbar = (
+  options: ScrollbarOptions = {}
+): ScrollbarInstance => {
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    console.warn('HoverScrollbar: Window or Document is not defined');
+    return {
+      destroy: () => {}
     };
-    this.init();
-  }
-  private init() {
-    const style = document.createElement('style');
-    const cssContent = this.generateCSS();
-    style.textContent = cssContent;
-    document.head.appendChild(style);
-    this.styleElement = style;
   }
 
-  private generateCSS(): string {
-    const { selector, global } = this.options;
+  let styleElement: HTMLStyleElement | null = null;
+
+  const mergedOptions = {
+    global: false,
+    ...options
+  };
+
+  const generateCSS = (): string => {
+    const { selector, global, style } = mergedOptions;
+    const thumbBgColor = style?.thumbBgColor || 'darkgray';
+    const thumbHoverBgColor = style?.thumbHoverBgColor || 'rgb(128 128 128)';
 
     if (global) {
       return `
@@ -42,20 +35,21 @@ export class HoverScrollbar {
         }
         
         *::-webkit-scrollbar-thumb {
-          background: darkgray;
+          background: ${thumbBgColor};
           border-radius: 12px;
         }
 
         *::-webkit-scrollbar-thumb:hover {
           cursor: pointer;
-          background: rgb(128 128 128);
+          background: ${thumbHoverBgColor};
         }
       `;
     } else if (selector) {
-      const originWidth =
-        document.querySelector(selector)?.getBoundingClientRect().width || 0;
+      try {
+        const originWidth =
+          document.querySelector(selector)?.getBoundingClientRect().width || 0;
 
-      return `
+        return `
         ${selector} {
           padding-right: 10px !important;
           padding-left: 10px !important;
@@ -83,29 +77,58 @@ export class HoverScrollbar {
         }
         
         ${selector}::-webkit-scrollbar-thumb {
-          background: darkgray;
+          background: ${thumbBgColor};
           border-radius: 12px;
         }
 
         ${selector}::-webkit-scrollbar-thumb:hover {
           cursor: pointer;
-          background: rgb(128 128 128);
+          background: ${thumbHoverBgColor};
         }
       `;
+      } catch (error) {
+        console.error(
+          'HoverScrollbar: Error getting element dimensions',
+          error
+        );
+        return '';
+      }
     }
 
     return '';
-  }
+  };
 
-  public destroy() {
-    if (this.styleElement) {
-      document.head.removeChild(this.styleElement);
-      this.styleElement = null;
+  const init = () => {
+    try {
+      const style = document.createElement('style');
+      const cssContent = generateCSS();
+      style.textContent = cssContent;
+      document.head.appendChild(style);
+      styleElement = style;
+    } catch (error) {
+      console.error('HoverScrollbar: Error initializing styles', error);
     }
-  }
-}
+  };
 
-// 重要：添加类型断言
-const ScrollbarWithConstructor =
-  HoverScrollbar as unknown as ScrollbarConstructor;
-export default ScrollbarWithConstructor;
+  const destroy = () => {
+    if (styleElement) {
+      try {
+        document.head.removeChild(styleElement);
+        styleElement = null;
+      } catch (error) {
+        console.error('HoverScrollbar: Error destroying styles', error);
+      }
+    }
+  };
+
+  // 初始化
+  init();
+
+  // 返回实例接口
+  return {
+    destroy
+  };
+};
+
+export type { ScrollbarOptions, ScrollbarInstance };
+export default createHoverScrollbar;
