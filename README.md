@@ -91,7 +91,7 @@ pnpm add hover-scrollbar
 
 | 属性名 | 类型 | 说明 | 默认值 |
 | ------ | ------ | ------ | ------ |
-| global | boolean | 是否全部修改样式 | false |
+| global | boolean | 是否全局修改样式 | false |
 | selector | string | 节点选择器 | global和selector二选一必传 |
-| style | {thumbBgColor?: string;thumbHoverBgColor?: string;} | 滚动条颜色和滚动条悬浮颜色 | {thumbBgColor: darkgray;thumbHoverBgColor: 'rgb(128 128 128)';} |
+| style | {thumbBgColor?: string;thumbHoverBgColor?: string;} | 滚动条颜色和滚动条悬浮颜色 | thumbBgColor: darkgray;thumbHoverBgColor: 'rgb(128 128 128)'; |
 | destroy | function | 销毁重置样式 | - |
