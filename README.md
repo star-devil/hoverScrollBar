@@ -11,9 +11,13 @@
 
 ## demo
 
-![鼠标悬浮变成红色](src/20250121111739.gif)
+![鼠标悬浮出现滚动条](https://github.com/star-devil/hoverScrollBar/blob/main/src/20250121111739.gif?raw=true)
 
 ## Links
+
+[👉 npm包：![npm version](https://img.shields.io/npm/v/hover-scrollbar.svg)](https://www.npmjs.com/package/hover-scrollbar)
+
+[✌️ 下载量：![npm downloads](https://img.shields.io/npm/dm/hover-scrollbar.svg)](https://www.npmjs.com/package/hover-scrollbar)
 
 [👉 hoverScrollBar：github项目地址](https://github.com/star-devil/hoverScrollBar.git)
 
