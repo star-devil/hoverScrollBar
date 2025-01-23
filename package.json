@@ -1,6 +1,6 @@
 {
   "name": "hover-scrollbar",
-  "version": "0.1.2",
+  "version": "0.1.5",
   "description": "重置谷歌浏览器滚动条样式，鼠标移入时才显示滚动条",
   "files": [
     "dist"

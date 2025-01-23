@@ -1,8 +1,3 @@
-<!--
- * @Author: wangqiaoling
- * @LastEditors: wangqiaoling
- * @Description: 
--->
 # HoverScrollbar
 
 ## description
@@ -94,6 +89,26 @@ pnpm add hover-scrollbar
   2. 且默认不显示滚动条，只有悬浮到这个节点上才会出现。
 
   3. 为了显示滚动条时，不挤压内部内部元素导致布局变形，为选中节点默认添加了左右`padding`各`10px`。如果原节点就有`padding`值可能会造成样式冲突，这个会在后续版本中想办法解决。
+
+  4. 如果你在使用时发现鼠标移入出现滚动条时，元素宽度会变化，那么请手动为你的元素 `hover` 设置 `width:xxx !important`将宽度固定。如下：
+
+  ```vue
+  <script>
+    nextTick(() => {
+      scroll.value = createHoverScrollbar({
+        selector: '.content', // 假如你选择的元素是.content,且 原始宽度是 100%
+      });
+    });
+  </script>
+  <style lang='scss' scoped>
+    .content{
+      &:hover{
+        width: 100% !important; // 原始宽度是 100%
+        width: 350px !important; // 原始宽度是 350px
+      }
+    }
+  </style>
+  ```
 
 ## Options
 

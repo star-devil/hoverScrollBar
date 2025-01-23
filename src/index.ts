@@ -47,7 +47,7 @@ export const createHoverScrollbar = (
     } else if (selector) {
       try {
         let elementWidth = 0;
-        const element = document.querySelector('.wrapper') as HTMLElement;
+        const element = document.querySelector(selector) as HTMLElement;
         const originalWidth = element?.getBoundingClientRect().width;
         const display = window.getComputedStyle(element).display;
 
