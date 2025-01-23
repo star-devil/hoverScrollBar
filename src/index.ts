@@ -46,8 +46,16 @@ export const createHoverScrollbar = (
       `;
     } else if (selector) {
       try {
-        const originWidth =
-          document.querySelector(selector)?.getBoundingClientRect().width || 0;
+        let elementWidth = 0;
+        const element = document.querySelector('.wrapper') as HTMLElement;
+        const originalWidth = element?.getBoundingClientRect().width;
+        const display = window.getComputedStyle(element).display;
+
+        if (display !== 'flex' && display !== 'inline-flex') {
+          elementWidth = originalWidth + 6;
+        } else {
+          elementWidth = originalWidth;
+        }
 
         return `
         ${selector} {
@@ -59,7 +67,7 @@ export const createHoverScrollbar = (
             
         ${selector}:hover {
           padding-right: 2px !important;
-          width: ${originWidth + 6}px !important;
+          width: ${elementWidth}px !important;
         }
 
         ${selector}:hover::-webkit-scrollbar {
